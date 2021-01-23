@@ -2,10 +2,10 @@ import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.MaxCountExceededException;
 import org.apache.commons.math3.ode.FirstOrderDifferentialEquations;
 
-public class OscillatorODE implements FirstOrderDifferentialEquations {
+public class CustomODE implements FirstOrderDifferentialEquations {
     private double param;
 
-    public OscillatorODE(double param) {
+    public CustomODE(double param) {
         this.param = param;
     }
 

@@ -70,7 +70,7 @@ public class FXMLController {
     double param;
     double t;
     double step;
-    OscillatorODE ode;
+    CustomODE ode;
     FirstOrderIntegrator integrator;
     double[] x0 = new double[2];
     double[] x = new double[2];
@@ -91,7 +91,7 @@ public class FXMLController {
         integrator.addStepHandler(csh);
         x0[0]=x0_0;
         x0[1]=x0_1;
-        ode = new OscillatorODE(param);
+        ode = new CustomODE(param);
         integrator.integrate(ode,0,x0,t,x);
         ArrayList<Pair<Double, Pair<Double, Double>>> results = csh.getResults();
         graph.setAnimated(false);
