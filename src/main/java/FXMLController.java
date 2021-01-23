@@ -15,9 +15,6 @@ import org.apache.commons.math3.ode.FirstOrderIntegrator;
 import org.apache.commons.math3.ode.nonstiff.EulerIntegrator;
 import org.apache.commons.math3.ode.nonstiff.MidpointIntegrator;
 
-
-import javax.management.InvalidAttributeValueException;
-
 public class FXMLController {
 
     @FXML
@@ -60,6 +57,9 @@ public class FXMLController {
     private Button btnPlotV;
 
     @FXML
+    private Button btnPlotXV;
+
+    @FXML
     private Button btnClear;
 
 
@@ -79,6 +79,7 @@ public class FXMLController {
 
     XYChart.Series seriesX;
     XYChart.Series seriesV;
+    XYChart.Series seriesXV;
 
 
     // Funkcja wywoływana po naciśnięciu przycisku "plot"
@@ -98,14 +99,17 @@ public class FXMLController {
         System.out.println("\nTESTIN\n");
         ArrayList<Pair<Double, Pair<Double, Double>>> results = csh.getResults();
         graph.setAnimated(false);
-        graph.getData().clear();                                                //Czyszczenie grafu, na którym będzie rysowana funkcja
+        graph.getData().clear();//Czyszczenie grafu, na którym będzie rysowana funkcja
          seriesX = new XYChart.Series();
          seriesV = new XYChart.Series();
+         seriesXV = new XYChart.Series();
         //Tworzenie nowej serii danych
         for(Pair p : results){         //Pętla od dolnej granicy przedziału do górnej granicy przedziału
             Pair <Double,Double> xAndy = (Pair<Double, Double>) p.getValue();
             seriesX.getData().add(new XYChart.Data<>(p.getKey(),xAndy.getKey()));  //Dodawanie wartości funkcji w x, do serii danych
             seriesV.getData().add(new XYChart.Data<>(p.getKey(),xAndy.getValue()));  //Dodawanie wartości funkcji w x, do serii danych
+            seriesXV.getData().add(new XYChart.Data<>(xAndy.getKey(),xAndy.getValue()));  //Dodawanie wartości funkcji w x, do serii danych
+
         }
         //series.setName("f(x) = " + function.toString());
     }
@@ -129,12 +133,13 @@ public class FXMLController {
             graph.getData().add(seriesX);
     }
 
+    @FXML
+    void onClickPlotXV() {
+        if(!graph.getData().contains(seriesXV))
+            graph.getData().add(seriesXV);
+    }
 
-    // Funkcja wywoływana po naciśnięciu przycisku "find root"
 
-
-
-    //Seria poleceń przypisujących wartości wprowadzone do Text fieldów / chekboxów przez użytkownika odpowiadającym im zmiennym
     @FXML
     void onEpsilon_input() {
     epsilon = Double.parseDouble(input_epsilon.getText());
@@ -166,7 +171,6 @@ public class FXMLController {
     }
 
 
-    //klasa pozwalająca na przekierowanie outputu konsoli do text Area w GUI programu
     private static class Console extends OutputStream {
         private final TextArea console;
         public Console(TextArea console) {
@@ -178,7 +182,6 @@ public class FXMLController {
         public void write(int b) {
             appendText(String.valueOf((char)b));
         }
-
     }
 
     @FXML
@@ -196,6 +199,7 @@ public class FXMLController {
         assert btnPlot != null : "fx:id=\"btnPlot\" was not injected: check your FXML file 'scene.fxml'.";
         assert btnPlotX != null : "fx:id=\"btnPlotX\" was not injected: check your FXML file 'scene.fxml'.";
         assert btnPlotV != null : "fx:id=\"btnPlotV\" was not injected: check your FXML file 'scene.fxml'.";
+        assert btnPlotXV != null : "fx:id=\"btnPlotXV\" was not injected: check your FXML file 'scene.fxml'.";
         assert btnClear != null : "fx:id=\"btnClear\" was not injected: check your FXML file 'scene.fxml'.";
         this.console = new Console(consoleLog);
         RootFinderMethodBox.setItems(rootFinderMethods);

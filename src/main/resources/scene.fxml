@@ -41,6 +41,7 @@
             <Button fx:id="btnPlot" mnemonicParsing="false" onAction="#onClickPlot" prefWidth="100.0" text="Calculate" />
             <Button fx:id="btnPlotX" mnemonicParsing="false" onAction="#onClickPlotX" prefWidth="100.0" text="PlotX" />
             <Button fx:id="btnPlotV" mnemonicParsing="false" onAction="#onClickPlotV" prefWidth="100.0" text="PlotV" />
+            <Button fx:id="btnPlotXV" mnemonicParsing="false" onAction="#onClickPlotXV" prefWidth="100.0" text="PlotXV" />
             <Button fx:id="btnClear" mnemonicParsing="false" onAction="#onClickClear" prefWidth="100.0" text="Clear" />
          </children>
          <BorderPane.margin>
