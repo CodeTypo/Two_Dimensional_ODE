@@ -37,11 +37,11 @@
             <TextField id="input_param" fx:id="input_param" alignment="CENTER" onAction="#onParam_input" prefHeight="26.0" prefWidth="56.0" promptText="param" />
             <TextField id="input_t" fx:id="input_t" alignment="CENTER" onAction="#onT_input" promptText="t" />
             <TextField id="input_maxEpsil" fx:id="input_epsilon" alignment="CENTER" onAction="#onEpsilon_input" prefHeight="25.0" prefWidth="54.0" promptText="step" />
-            <ChoiceBox fx:id="RootFinderMethodBox" prefWidth="150.0" />
-            <Button fx:id="btnPlot" mnemonicParsing="false" onAction="#onClickPlot" prefWidth="100.0" text="Calculate" />
-            <Button fx:id="btnPlotX" mnemonicParsing="false" onAction="#onClickPlotX" prefWidth="100.0" text="PlotX" />
-            <Button fx:id="btnPlotV" mnemonicParsing="false" onAction="#onClickPlotV" prefWidth="100.0" text="PlotV" />
-            <Button fx:id="btnPlotXV" mnemonicParsing="false" onAction="#onClickPlotXV" prefWidth="100.0" text="PlotXV" />
+            <ChoiceBox fx:id="stepMethodBox" prefWidth="150.0" />
+            <Button fx:id="btnPlot" mnemonicParsing="false" onAction="#onClickCalculate" prefWidth="100.0" text="Calculate" />
+            <Button fx:id="btnPlotX" mnemonicParsing="false" onAction="#onClickPlotX" prefWidth="100.0" text="Plot x(t)" />
+            <Button fx:id="btnPlotV" mnemonicParsing="false" onAction="#onClickPlotV" prefWidth="100.0" text="Plot v(t)" />
+            <Button fx:id="btnPlotXV" mnemonicParsing="false" onAction="#onClickPlotXV" prefWidth="100.0" text="Plot V(x)" />
             <Button fx:id="btnClear" mnemonicParsing="false" onAction="#onClickClear" prefWidth="100.0" text="Clear" />
          </children>
          <BorderPane.margin>

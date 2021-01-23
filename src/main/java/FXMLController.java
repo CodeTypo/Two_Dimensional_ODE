@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -45,7 +44,7 @@ public class FXMLController {
     private TextField input_epsilon;
 
     @FXML
-    private ChoiceBox<String> RootFinderMethodBox;
+    private ChoiceBox<String> stepMethodBox;
 
     @FXML
     private Button btnPlot;
@@ -63,15 +62,14 @@ public class FXMLController {
     private Button btnClear;
 
 
-    ObservableList<String>rootFinderMethods = FXCollections.observableArrayList
+    ObservableList<String>stepMethods = FXCollections.observableArrayList
             ("Euler","Midpoint");
     Console console;
     double x0_0;
     double x0_1;
     double param;
     double t;
-    double epsilon;    //Tolerowana wartość błędu wyznaczania pierwiastka
-
+    double step;
     OscillatorODE ode;
     FirstOrderIntegrator integrator;
     double[] x0 = new double[2];
@@ -81,44 +79,45 @@ public class FXMLController {
     XYChart.Series seriesV;
     XYChart.Series seriesXV;
 
-
-    // Funkcja wywoływana po naciśnięciu przycisku "plot"
     @FXML
-    void onClickPlot() {
-        String methodType = RootFinderMethodBox.getValue();
+    void onClickCalculate() {
+        String methodType = stepMethodBox.getValue();
         switch (methodType) {
-            case "Euler"         -> integrator = new EulerIntegrator(epsilon);
-            case "Midpoint"      -> integrator = new MidpointIntegrator(epsilon);
+            case "Euler"         -> integrator = new EulerIntegrator(step);
+            case "Midpoint"      -> integrator = new MidpointIntegrator(step);
         }
+
         CustomStepHandler csh = new CustomStepHandler();
         integrator.addStepHandler(csh);
         x0[0]=x0_0;
         x0[1]=x0_1;
         ode = new OscillatorODE(param);
         integrator.integrate(ode,0,x0,t,x);
-        System.out.println("\nTESTIN\n");
         ArrayList<Pair<Double, Pair<Double, Double>>> results = csh.getResults();
         graph.setAnimated(false);
-        graph.getData().clear();//Czyszczenie grafu, na którym będzie rysowana funkcja
+        graph.getData().clear();
          seriesX = new XYChart.Series();
          seriesV = new XYChart.Series();
          seriesXV = new XYChart.Series();
-        //Tworzenie nowej serii danych
-        for(Pair p : results){         //Pętla od dolnej granicy przedziału do górnej granicy przedziału
-            Pair <Double,Double> xAndy = (Pair<Double, Double>) p.getValue();
-            seriesX.getData().add(new XYChart.Data<>(p.getKey(),xAndy.getKey()));  //Dodawanie wartości funkcji w x, do serii danych
-            seriesV.getData().add(new XYChart.Data<>(p.getKey(),xAndy.getValue()));  //Dodawanie wartości funkcji w x, do serii danych
-            seriesXV.getData().add(new XYChart.Data<>(xAndy.getKey(),xAndy.getValue()));  //Dodawanie wartości funkcji w x, do serii danych
+         seriesX.setName("x = f(t)");
+         seriesV.setName("v = f(t)");
+         seriesXV.setName("v = f(x)");
+
+
+        for(Pair p : results){
+            Pair <Double,Double> xAndV = (Pair<Double, Double>) p.getValue();
+            //Struktura pary: key - wartość X, value - wartość V.
+            seriesX.getData().add(new XYChart.Data<>(p.getKey(),xAndV.getKey()));
+            seriesV.getData().add(new XYChart.Data<>(p.getKey(),xAndV.getValue()));
+            seriesXV.getData().add(new XYChart.Data<>(xAndV.getKey(),xAndV.getValue()));
 
         }
-        //series.setName("f(x) = " + function.toString());
     }
 
     @FXML
-    void onClickClear(ActionEvent event) {
-        graph.getData().clear();                                                //Czyszczenie grafu, na którym będzie rysowana funkcja
+    void onClickClear() {
+        graph.getData().clear();
     }
-
 
     @FXML
     void onClickPlotV() {
@@ -139,10 +138,9 @@ public class FXMLController {
             graph.getData().add(seriesXV);
     }
 
-
     @FXML
     void onEpsilon_input() {
-    epsilon = Double.parseDouble(input_epsilon.getText());
+    step = Double.parseDouble(input_epsilon.getText());
         System.out.println("Step set!");
     }
 
@@ -195,18 +193,16 @@ public class FXMLController {
         assert input_param != null : "fx:id=\"input_param\" was not injected: check your FXML file 'scene.fxml'.";
         assert input_t != null : "fx:id=\"input_t\" was not injected: check your FXML file 'scene.fxml'.";
         assert input_epsilon != null : "fx:id=\"input_epsilon\" was not injected: check your FXML file 'scene.fxml'.";
-        assert RootFinderMethodBox != null : "fx:id=\"RootFinderMethodBox\" was not injected: check your FXML file 'scene.fxml'.";
+        assert stepMethodBox != null : "fx:id=\"RootFinderMethodBox\" was not injected: check your FXML file 'scene.fxml'.";
         assert btnPlot != null : "fx:id=\"btnPlot\" was not injected: check your FXML file 'scene.fxml'.";
         assert btnPlotX != null : "fx:id=\"btnPlotX\" was not injected: check your FXML file 'scene.fxml'.";
         assert btnPlotV != null : "fx:id=\"btnPlotV\" was not injected: check your FXML file 'scene.fxml'.";
         assert btnPlotXV != null : "fx:id=\"btnPlotXV\" was not injected: check your FXML file 'scene.fxml'.";
         assert btnClear != null : "fx:id=\"btnClear\" was not injected: check your FXML file 'scene.fxml'.";
         this.console = new Console(consoleLog);
-        RootFinderMethodBox.setItems(rootFinderMethods);
+        stepMethodBox.setItems(stepMethods);
         PrintStream ps = new PrintStream(new Console(consoleLog));
         System.setOut(ps);
         System.setErr(ps);
-
-
     }
 }

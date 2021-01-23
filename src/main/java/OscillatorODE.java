@@ -9,10 +9,6 @@ public class OscillatorODE implements FirstOrderDifferentialEquations {
         this.param = param;
     }
 
-    public void setParam(double param) {
-        this.param = param;
-    }
-
     @Override
     public int getDimension() {
         return 2;

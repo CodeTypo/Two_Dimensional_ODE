@@ -26,7 +26,6 @@ public class CustomStepHandler implements StepHandler {
     public void handleStep(StepInterpolator interpolator, boolean isLast) throws MaxCountExceededException {
         double t = interpolator.getCurrentTime();
         double [] x = interpolator.getInterpolatedState();
-        //System.out.printf("\nt: %.2f \t%.10f \t%.10f",t,x[0],x[1]);
         results.add(new Pair<>(t, new Pair<>(x[0], x[1])));
     }
 }
