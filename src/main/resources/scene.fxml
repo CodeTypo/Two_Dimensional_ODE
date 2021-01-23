@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FXMLController">
+   <center>
+      <LineChart fx:id="graph" prefHeight="300.0" prefWidth="680.0" BorderPane.alignment="CENTER">
+        <xAxis>
+          <NumberAxis label="x" side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" label="f(x)" side="LEFT" />
+        </yAxis>
+      </LineChart>
+   </center>
+   <right>
+      <VBox alignment="TOP_CENTER" prefHeight="151.0" prefWidth="100.0" spacing="2.0" BorderPane.alignment="TOP_CENTER">
+         <children>
+            <HBox prefHeight="29.0" prefWidth="100.0">
+               <children>
+                  <TextField id="input_x0_0" fx:id="input_x0_0" alignment="CENTER" onAction="#onX0_0_input" promptText="x0 [0]">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </TextField>
+               </children></HBox>
+            <TextField id="input_x0_1" fx:id="input_x0_1" alignment="CENTER" onAction="#onX0_1_input" promptText="x0 [1]" />
+            <TextField id="input_param" fx:id="input_param" alignment="CENTER" onAction="#onParam_input" prefHeight="26.0" prefWidth="56.0" promptText="param" />
+            <TextField id="input_t" fx:id="input_t" alignment="CENTER" onAction="#onT_input" promptText="t" />
+            <TextField id="input_maxEpsil" fx:id="input_epsilon" alignment="CENTER" onAction="#onEpsilon_input" prefHeight="25.0" prefWidth="54.0" promptText="step" />
+            <ChoiceBox fx:id="RootFinderMethodBox" prefWidth="150.0" />
+            <Button fx:id="btnPlot" mnemonicParsing="false" onAction="#onClickPlot" prefWidth="100.0" text="Calculate" />
+            <Button fx:id="btnPlotX" mnemonicParsing="false" onAction="#onClickPlotX" prefWidth="100.0" text="PlotX" />
+            <Button fx:id="btnPlotV" mnemonicParsing="false" onAction="#onClickPlotV" prefWidth="100.0" text="PlotV" />
+            <Button fx:id="btnClear" mnemonicParsing="false" onAction="#onClickClear" prefWidth="100.0" text="Clear" />
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding></VBox>
+   </right>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="204.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextArea fx:id="consoleLog" editable="false" prefHeight="204.0" prefWidth="800.0" promptText="Console Log">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </TextArea>
+         </children></HBox>
+   </bottom>
+   <top>
+      <HBox alignment="CENTER" prefHeight="1.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
+</BorderPane>
